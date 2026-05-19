@@ -54,10 +54,7 @@ class Neural_Network():
         y_pred = np.clip(y_pred, 1e-15, 1.0 - 1e-15)
         # Berechnet: -Summe(y_true * log(y_pred))
         return -np.sum(y_true * np.log(y_pred))
-    
-    def get_max_index(self, vector):
-        return np.argmax(vector)
-    
+     
     def lost_function(self, input, label): 
         return self.categorical_crossentropy(input, label)
 
@@ -103,10 +100,11 @@ class Neural_Network():
     def process(self, input, y): 
         split = 10
         epochs = 50
+        batch_size = 10
         for epoch in range(epochs):
             accuracy = 0
             count = 0
-            for size in range(0, 10000, 10): 
+            for size in range(0, len(y) , batch_size): 
                 self.forward_pass(input[size:size+10])
                 count +=10
                 vorhersagen = np.argmax(self.activation[-1], axis=0)
